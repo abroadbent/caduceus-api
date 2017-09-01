@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using Api.Services;
 
 namespace Api
 {
@@ -26,11 +27,14 @@ namespace Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // add framework services
             services.AddMvc();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString(("DefaultConnection"))));
             services.AddAutoMapper();
-            
+
+            // add app services
+            services.AddTransient<IAppUserService, AppUserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

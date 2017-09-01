@@ -1,17 +1,51 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
 namespace Api.Models.Domain.AppUser
 {
-    public class RegistrationViewModel
+    public class RegistrationViewModel : IValidatableObject
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Username { get; set; }
 
-        public RegistrationViewModel(string firstName, string lastName, string email)
+        public string Email
+        {
+            get
+            {
+                return this.Username;
+            }
+        }
+
+        public RegistrationViewModel()
+        {
+        }
+
+        public RegistrationViewModel(string firstName, string lastName, string username)
         {
             this.FirstName = firstName;
             this.LastName = lastName;
-            this.Email = email;
+            this.Username = username;
+        }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (string.IsNullOrWhiteSpace(this.FirstName))
+            {
+                yield return new ValidationResult("First name is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(this.LastName))
+            {
+                yield return new ValidationResult("Last name is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(this.Username))
+            {
+                yield return new ValidationResult("Username is required.");
+            }
         }
     }
 }
