@@ -43,10 +43,10 @@ namespace Api.Controllers
         }
 
         // GET api/values/secure
-        [HttpGet, Authorize(Policy = "ApiUser")]
-        public string Secure()
-        {
-            return "Secured method requiring authorization token.";
-        }
+        //[HttpGet, Authorize(Policy = "ApiUser")]
+        //public string Secure()
+        //{
+        //    return "Secured method requiring authorization token.";
+        //}
     }
 }

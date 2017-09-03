@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Api.Models.Domain.AppUser
 {
-    public class AppUser : IdentityUser
+    public class AppUser : IdentityUser<int>
     {
         [Required]
         public DateTimeOffset Created { get; set; }
@@ -32,10 +32,14 @@ namespace Api.Models.Domain.AppUser
 
         public AppUser() 
         {
+            this.Created = DateTimeOffset.Now;
+            this.IsActive = true;
         }
 
         public AppUser(string username) : base(username)
-        {   
+        {
+            this.Created = DateTimeOffset.Now;
+            this.IsActive = true;
         }
 
         public AppUser(string firstName, string lastName, string username) : this(username) 

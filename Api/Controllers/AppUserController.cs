@@ -22,7 +22,7 @@ namespace Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(string id)
+        public async Task<ActionResult> Delete(int id)
         {
             await _service.Disable(id);
 
@@ -38,7 +38,7 @@ namespace Api.Controllers
 		}
 
         [HttpGet("{id}")]
-		public async Task<IActionResult> Get(string id)
+		public async Task<IActionResult> Get(int id)
 		{
 			var user = await _service.Single(id);
 
