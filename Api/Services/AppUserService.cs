@@ -72,11 +72,11 @@ namespace Api.Services
             return await _db.SaveChangesAsync() == 1;
         }
 
-        public async Task<string> Login(LoginViewModel model)
+        public async Task<AuthResponse> Login(LoginViewModel model)
         {
             // todo: need to check for bad username too
             // get user based on username
-            var user = await _db.AppUsers.Where(a => a.UserName == model.Username).SingleAsync();
+            var user = await _db.AppUsers.Where(a => a.UserName == model.Username).SingleOrDefaultAsync();
 
             // validate password
             if(!Encryption.ValidateHashedPassword(model.Password, user.PasswordHash))
@@ -84,13 +84,16 @@ namespace Api.Services
                 throw new UnauthorizedAccessException();
             }
 
-            // return the JWT token string
-            return await _jwtService.GenerateEncodedToken(model.Username);
+            // get JWT token string
+            var token = await _jwtService.GenerateEncodedToken(model.Username);
+
+            // return auth response
+            return new AuthResponse(token);
         }
 
         public async Task<AppUser> Single(int id)
         {
-            return await _db.AppUsers.SingleAsync(a => a.Id == id);
+            return await _db.AppUsers.SingleOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task<AppUser> Update(EditableAppUserViewModel model)

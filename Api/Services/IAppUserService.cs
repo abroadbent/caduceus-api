@@ -11,7 +11,7 @@ namespace Api.Services
         Task<IEnumerable<AppUser>> Collection(AppUserFilter filter);
         Task<AppUser> Create(RegistrationViewModel model);
         Task<bool> Disable(int id);
-        Task<string> Login(LoginViewModel model);
+        Task<AuthResponse> Login(LoginViewModel model);
         Task<AppUser> Single(int id);
         Task<AppUser> Update(EditableAppUserViewModel model);
     }

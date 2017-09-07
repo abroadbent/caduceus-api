@@ -22,8 +22,9 @@ namespace Api.Migrations
 
             modelBuilder.Entity("Api.Models.Domain.AppUser.AppUser", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("TenantId");
+
+                    b.Property<int>("Id");
 
                     b.Property<int>("AccessFailedCount");
 
@@ -36,12 +37,14 @@ namespace Api.Migrations
                     b.Property<bool>("EmailConfirmed");
 
                     b.Property<string>("FirstName")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(25);
 
                     b.Property<bool>("IsActive");
 
                     b.Property<string>("LastName")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(25);
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -65,9 +68,33 @@ namespace Api.Migrations
 
                     b.Property<string>("UserName");
 
-                    b.HasKey("Id");
+                    b.HasKey("TenantId", "Id");
 
                     b.ToTable("AppUsers");
+                });
+
+            modelBuilder.Entity("Api.Models.Domain.Tenant.Tenant", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTimeOffset>("Created")
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<DateTimeOffset?>("Modified");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<Guid>("ObfuscatedId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tenants");
                 });
 #pragma warning restore 612, 618
         }

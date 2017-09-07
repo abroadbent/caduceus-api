@@ -37,6 +37,13 @@ namespace Api
         public void ConfigureServices(IServiceCollection services)
         {
             // add framework services
+            services.AddCors(options => {
+                               options.AddPolicy("CorsPolicy", (builder) => builder
+                               .WithOrigins("http://localhost:4200")
+                               .AllowAnyMethod()
+                               .AllowCredentials()
+                               .AllowAnyHeader());
+            });
             services.AddMvc();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString(("DefaultConnection"))));
@@ -64,6 +71,7 @@ namespace Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("CorsPolicy");
             app.UseMvc();
 
 			// jwt token authorization configuration

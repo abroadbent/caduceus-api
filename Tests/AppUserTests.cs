@@ -10,7 +10,7 @@ namespace Tests
 
         public AppUserTests()
         {
-            _testUser = new AppUser("Nicholas", "Barger", "nicholas@nicholasbarger.com");    
+            _testUser = new AppUser(1, "nicholas@nicholasbarger.com", "Nicholas", "Barger");    
         }
 
 		[Fact]
