@@ -1,9 +1,9 @@
 ﻿using System;
 namespace Api.Models.Domain.General
 {
-    public interface IDomainModel
+    public interface IDomainModel<T>
     {
-        int Id { get; set; }
+        T Id { get; set; }
         bool IsActive { get; set; }
         DateTimeOffset Created { get; set; }
         DateTimeOffset? Modified { get; set; }

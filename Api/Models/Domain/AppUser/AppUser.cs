@@ -11,18 +11,21 @@ namespace Api.Models.Domain.AppUser
         [Required]
         public DateTimeOffset Created { get; set; }
 
-        [Required]
+        [MaxLength(25), MinLength(1), Required]
         public string FirstName { get; set; }
 
         [Required]
         public bool IsActive { get; set; }
 
-        [Required]
+        [MaxLength(25), MinLength(1), Required]
         public string LastName { get; set; }
 
         public DateTimeOffset? Modified { get; set; }
 
         [Required]
+        public int TenantId { get; set; }
+
+        [MaxLength(255), Required]
         public string SearchContent
         {
             get {
@@ -36,13 +39,14 @@ namespace Api.Models.Domain.AppUser
             this.IsActive = true;
         }
 
-        public AppUser(string username) : base(username)
+        public AppUser(int tenantId, string username) : base(username)
         {
             this.Created = DateTimeOffset.Now;
             this.IsActive = true;
+            this.TenantId = tenantId;
         }
 
-        public AppUser(string firstName, string lastName, string username) : this(username) 
+        public AppUser(int tenantId, string username, string firstName, string lastName) : this(tenantId, username) 
         {
             this.FirstName = firstName;
             this.LastName = lastName;

@@ -13,6 +13,8 @@ namespace Api.Models.Domain.AppUser
         {
         }
 
+        // todo: should we use this style of validation throughout the models or use
+        // annotation and logic services to do the validation?
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if(string.IsNullOrWhiteSpace(this.Username))

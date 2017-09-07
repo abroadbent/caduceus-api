@@ -1,20 +1,21 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Api.Models.Domain.General
 {
-    public class DomainModel : IDomainModel
+    public abstract class DomainModel<T> : IDomainModel<T>
     {
-        [Required]
-        public int Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key, Required]
+        public T Id { get; set; }
 
         [Required]
         public Guid ObfuscatedId { get; set; }
 
-        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed), Required]
 		public bool IsActive { get; set; }
 
-        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed), Required]
 		public DateTimeOffset Created { get; set; }
 
 		public DateTimeOffset? Modified { get; set; }
