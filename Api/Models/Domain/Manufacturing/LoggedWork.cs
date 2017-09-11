@@ -7,9 +7,32 @@ namespace Api.Models.Domain.Manufacturing
     {
         public AppUser.AppUser User { get; set; }
         public string Description { get; set; }
+        public DateTimeOffset? ClockIn { get; set; }
+        public DateTimeOffset? ClockOut { get; set; }
 
-        // todo: does this need to go against a work order?
         public WorkOrder WorkOrder { get; set; }
+
+        public TimeSpan? TimeClocked
+        {
+            get 
+            {
+                if(this.ClockIn.HasValue && this.ClockOut.HasValue)
+                {
+                    return this.ClockOut - this.ClockIn;
+                }
+                else {
+                    return null;
+                }
+            }
+        }
+
+        public double TimeClockedInMinutes
+        {
+            get 
+            {
+                return this.TimeClocked.GetValueOrDefault().TotalMinutes;
+            }
+        }
 
         public LoggedWork()
         {
