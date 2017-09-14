@@ -7,8 +7,8 @@ namespace Api.Models.Domain.Manufacturing
     public class BillOfMaterial : TenantModel<int>
     {
         public string Code { get; set; }
-        public ItemDefinition Component { get; set; }
-        public ItemDefinition Parent { get; set; }
+        public InventoryItem Component { get; set; }
+        public InventoryItem Parent { get; set; }
         public decimal Quantity { get; set; }
 
         public BillOfMaterial()

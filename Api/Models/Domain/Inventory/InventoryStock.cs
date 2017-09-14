@@ -5,7 +5,7 @@ namespace Api.Models.Domain.Inventory
 {
     public class InventoryStock : TenantModel<int>
     {
-        public ItemDefinition ItemDefinition { get; set; }
+        public InventoryItem InventoryItem { get; set; }
         public InventoryLocation Location { get; set; }
         public string Revision { get; set; }
         public InventoryStockStatus Status { get; set; }

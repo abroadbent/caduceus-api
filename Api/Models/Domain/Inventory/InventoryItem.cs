@@ -6,9 +6,10 @@ using Api.Models.Domain.Tenant;
 
 namespace Api.Models.Domain.Inventory
 {
-    public class ItemDefinition : TenantModel<int>
+    public class InventoryItem : TenantModel<int>
 	{
         public ICollection<BillOfMaterial> BillOfMaterials { get; set; }
+        public ICollection<Routing> Routings { get; set; }
 		public string Code { get; set; }
         public string Description { get; set; }
         public decimal Height { get; set; }
@@ -20,7 +21,7 @@ namespace Api.Models.Domain.Inventory
         public decimal Weight { get; set; }
         public decimal Width { get; set; }
 
-        public ItemDefinition()
+        public InventoryItem()
         {
 
         }

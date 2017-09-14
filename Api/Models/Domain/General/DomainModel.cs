@@ -20,6 +20,8 @@ namespace Api.Models.Domain.General
 
 		public DateTimeOffset? Modified { get; set; }
 
+        public string SearchContent { get; set; }
+
         public DomainModel()
         {
             this.IsActive = true;

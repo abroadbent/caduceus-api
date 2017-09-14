@@ -8,7 +8,7 @@ namespace Api.Models.Domain.Manufacturing
     public class WorkOrder
     {
         public BillOfMaterial BillOfMaterial { get; set; }
-        public ItemDefinition ItemDefinition { get; set; }
+        public InventoryItem InventoryItem { get; set; }
         public decimal Quantity { get; set; }
         public Routing Routing { get; set; }
         public UnitOfMeasure UnitOfMeasure { get; set; }

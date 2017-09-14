@@ -6,6 +6,7 @@ namespace Api.Models.Domain.Tenant
     public abstract class TenantModel<T> : DomainModel<T>
     {
         public Tenant Tenant { get; set; }
+        public T TenantId { get; set; }
 
         public TenantModel()
         {

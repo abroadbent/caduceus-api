@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Models.Domain.AppUser;
+using Api.Models.Domain.General;
 using Api.Models.System;
 using Api.Utilities;
 using AutoMapper;
@@ -24,7 +25,7 @@ namespace Api.Services
             this._jwtService = jwtService;
 		}
 
-        public async Task<IEnumerable<AppUser>> Collection(AppUserFilter filter)
+        public async Task<ICollection<AppUser>> Collection(AppUserFilter filter)
         {
             var query = _db.AppUsers.AsQueryable();
 
@@ -47,7 +48,6 @@ namespace Api.Services
                 query.Where(a => a.SearchContent.Contains(filter.SearchCriteria));
             }
 
-            // todo: it says async is not supported for this iqueryable provider
             return await query.ToListAsync();
         }
 

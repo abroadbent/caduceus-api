@@ -5,8 +5,6 @@ namespace Api.Models.Domain.AppUser
 {
     public class AppUserFilter : Filter
     {
-        public string SearchCriteria { get; set; }
-
         public AppUserFilter()
         {
         }
