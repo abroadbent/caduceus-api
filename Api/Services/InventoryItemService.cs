@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Services
 {
-    public class InventoryItemService : ICrudService<InventoryItem, CreateInventoryItemViewModel, EditableInventoryItemViewModel, InventoryItemFilter>
+    public class InventoryItemService : IInventoryItemService
 	{
 		private readonly IMapper _mapper;
 		private readonly ApplicationDbContext _db;
@@ -25,6 +25,11 @@ namespace Api.Services
 			this._db = db;
 			this._jwtService = jwtService;
 		}
+
+        public async Task<InventoryItemStatus> AdvanceWorkflow(int id)
+        {
+            throw new NotImplementedException();
+        }
 
 		public async Task<ICollection<InventoryItem>> Collection(InventoryItemFilter filter)
 		{

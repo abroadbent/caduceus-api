@@ -10,7 +10,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
-namespace Api.Services
+namespace Api.Services.AppUserService
 {
     public class AppUserService : IAppUserService
     {
@@ -49,6 +49,12 @@ namespace Api.Services
             }
 
             return await query.ToListAsync();
+            //var task = new Task<ICollection<AppUser>>(() =>
+            //{
+            //    return query.ToList();
+            //});
+
+            //return await task;
         }
 
         public async Task<AppUser> Create(RegistrationViewModel model)

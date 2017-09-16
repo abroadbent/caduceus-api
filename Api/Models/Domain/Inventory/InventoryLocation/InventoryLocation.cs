@@ -8,9 +8,11 @@ namespace Api.Models.Domain.Inventory
     {
         public string Description { get; set; }
         public string Name { get; set; }
-        public InventoryLocation Parent { get; set; }
-        public ICollection<InventoryLocation> SubLocations { get; set; }
-        public InventoryLocationStatus Status { get; set; }
+        public int ParentId { get; set; }
+
+        public virtual InventoryLocation Parent { get; set; }
+        public virtual ICollection<InventoryLocation> SubLocations { get; set; }
+        public virtual InventoryLocationStatus Status { get; set; }
 
         public InventoryLocation()
         {

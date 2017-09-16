@@ -15,11 +15,13 @@ namespace Api.Models.Domain.Manufacturing
         public RoutingStep RoutingStep { get; set; }
         public ICollection<AppUser.AppUser> AssignedUsers { get; set; }
         public decimal EstimatedCost { get; set; }
-        public decimal EstimatedLaborHours { get; set; }
+        public double EstimatedLaborHours { get; set; }
         public decimal ActualCost { get; set; }
-        public decimal ActualLaborHours { get; set; }
+        public double ActualLaborHours { get; set; }
         public ICollection<LoggedWork> LoggedWork { get; set; }
         public ICollection<QualityTestResult> QualityTestResults { get; set; }
+        public double ScrapQuantity { get; set; }
+        public ScrapReason ScrapReason { get; set; }
 
         public WorkOrderStep()
         {

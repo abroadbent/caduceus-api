@@ -2,16 +2,19 @@
 using Api.Models.Domain.AppUser;
 using Api.Models.Domain.Inventory;
 using Api.Models.Domain.Tenant;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Models.System
 {
     public class ApplicationDbContext : DbContext
     {
-        public DbSet<AppUser> AppUsers { get; set; }
-        public DbSet<InventoryItem> InventoryItems { get; set; }
-        public DbSet<Tenant> Tenants { get; set; }
+        public virtual DbSet<AppUser> AppUsers { get; set; }
+        public virtual DbSet<InventoryItem> InventoryItems { get; set; }
+        public virtual DbSet<Tenant> Tenants { get; set; }
+
+        public ApplicationDbContext()
+        {
+        }
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {

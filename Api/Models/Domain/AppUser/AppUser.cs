@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Api.Models.Domain.General;
+using Api.Models.Domain.Tenant;
 using Microsoft.AspNetCore.Identity;
 
 namespace Api.Models.Domain.AppUser
@@ -32,6 +33,8 @@ namespace Api.Models.Domain.AppUser
                 return string.Join("|", new[] { this.FirstName, this.LastName, this.UserName });
             }
         }
+
+        public virtual Tenant.Tenant Tenat { get; set; }
 
         public AppUser() 
         {

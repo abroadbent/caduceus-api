@@ -11,10 +11,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using Api.Services;
+using Api.Services.AppUserService;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens;
 using System.Text;
+using Api.Services;
 
 namespace Api
 {

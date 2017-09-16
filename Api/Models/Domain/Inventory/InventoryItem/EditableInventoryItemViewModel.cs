@@ -3,5 +3,7 @@
     public class EditableInventoryItemViewModel
     {
         public int Id { get; set; }
+
+        // todo
     }
 }
