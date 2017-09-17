@@ -31,11 +31,11 @@ namespace Api.Services
             throw new NotImplementedException();
         }
 
-		public async Task<ICollection<InventoryItem>> Collection(InventoryItemFilter filter)
+		public async Task<List<InventoryItem>> Collection(InventoryItemFilter filter)
 		{
 			var query = _db.InventoryItems.AsQueryable().Filter(filter);
 
-			return await query.ToListAsync();
+            return await Task.FromResult(query.ToList());
 		}
 
         public async Task<InventoryItem> Create(CreateInventoryItemViewModel model)

@@ -25,7 +25,7 @@ namespace Api.Services.AppUserService
             this._jwtService = jwtService;
 		}
 
-        public async Task<ICollection<AppUser>> Collection(AppUserFilter filter)
+        public async Task<List<AppUser>> Collection(AppUserFilter filter)
         {
             var query = _db.AppUsers.AsQueryable();
 
@@ -48,13 +48,7 @@ namespace Api.Services.AppUserService
                 query.Where(a => a.SearchContent.Contains(filter.SearchCriteria));
             }
 
-            return await query.ToListAsync();
-            //var task = new Task<ICollection<AppUser>>(() =>
-            //{
-            //    return query.ToList();
-            //});
-
-            //return await task;
+            return await Task.FromResult(query.ToList());
         }
 
         public async Task<AppUser> Create(RegistrationViewModel model)

@@ -7,7 +7,7 @@ namespace Api.Services
 {
     public interface ICrudService<T, CreateModel, UpdateModel, FilterModel>
     {
-		Task<ICollection<T>> Collection(FilterModel filter);
+		Task<List<T>> Collection(FilterModel filter);
 		Task<T> Create(CreateModel model);
 		Task<bool> Disable(int id);
 		Task<T> Single(int id);

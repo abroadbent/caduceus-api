@@ -53,7 +53,7 @@ namespace Api.Models.System
 		/// "jti" (JWT ID) Claim (default ID is a GUID)
 		/// </summary>
 		public Func<Task<string>> JtiGenerator =>
-		  () => Task.FromResult(Guid.NewGuid().ToString());
+        async () => await Task.FromResult(Guid.NewGuid().ToString());
 
 		/// <summary>
 		/// The signing key to use when generating tokens.

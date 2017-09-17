@@ -24,6 +24,9 @@
     <Folder Include="Models\Domain\Manufacturing\BillOfMaterial\" />
     <Folder Include="Models\Domain\Manufacturing\Routing\" />
     <Folder Include="Models\Domain\Manufacturing\WorkOrder\" />
+    <Folder Include="T4\" />
+    <Folder Include="Services\InventoryItemService\" />
+    <Folder Include="Services\JwtService\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
@@ -45,5 +48,16 @@
   <ItemGroup>
     <Compile Remove="Tests\AppUserTests.cs" />
     <Compile Remove="Models\Domain\AppUser\AppUserValidator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="T4\ControllerGeneration.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ControllerGeneration.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="T4\ControllerGeneration.cs">
+      <DependentUpon>ControllerGeneration.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>
