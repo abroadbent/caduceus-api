@@ -1,12 +1,18 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace Api.Models.Domain.AppUser
 {
     public class EditableAppUserViewModel
     {
-        public string FirstName { get; set; }
-        public int Id { get; set; }
-        public string LastName { get; set; }
-        public string Username { get; set; }
+		[MaxLength(25), MinLength(1), Required]
+		public string FirstName { get; set; }
+
+		[MaxLength(25), MinLength(1), Required]
+		public string LastName { get; set; }
+
+		[Phone]
+		public string PhoneNumber { get; set; }
 
         public EditableAppUserViewModel()
         {

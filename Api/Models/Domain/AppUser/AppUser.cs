@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Api.Models.Domain.General;
@@ -23,7 +24,7 @@ namespace Api.Models.Domain.AppUser
 
         public DateTimeOffset? Modified { get; set; }
 
-        [Required]
+        [Required, Range(1, int.MaxValue)]
         public int TenantId { get; set; }
 
         [MaxLength(255), Required]
@@ -34,7 +35,7 @@ namespace Api.Models.Domain.AppUser
             }
         }
 
-        public virtual Tenant.Tenant Tenat { get; set; }
+        public virtual Tenant.Tenant Tenant { get; set; }
 
         public AppUser() 
         {

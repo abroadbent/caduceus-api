@@ -4,12 +4,24 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Api.Models.Domain.AppUser
 {
-    public class RegistrationViewModel : IValidatableObject
+    public class RegistrationViewModel
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+		[MaxLength(25), MinLength(1), Required]
+		public string FirstName { get; set; }
+
+		[MaxLength(25), MinLength(1), Required]
+		public string LastName { get; set; }
+
+        [MinLength(6), MaxLength(25), Required]
         public string Password { get; set; }
+
+        [MinLength(6), MaxLength(25), Required]
+        public string ConfirmPassword { get; set; }
+
+        [Phone]
         public string PhoneNumber { get; set; }
+
+        [EmailAddress]
         public string Username { get; set; }
 
         public string Email
@@ -30,29 +42,6 @@ namespace Api.Models.Domain.AppUser
             this.LastName = lastName;
             this.Username = username;
             this.Password = password;
-        }
-
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            if (string.IsNullOrWhiteSpace(this.FirstName))
-            {
-                yield return new ValidationResult("First name is required.");
-            }
-
-            if (string.IsNullOrWhiteSpace(this.LastName))
-            {
-                yield return new ValidationResult("Last name is required.");
-            }
-
-            if (string.IsNullOrWhiteSpace(this.Username))
-            {
-                yield return new ValidationResult("Username is required.");
-            }
-
-            if (string.IsNullOrWhiteSpace(this.Password))
-            {
-                yield return new ValidationResult("Password is required.");
-            }
         }
     }
 }

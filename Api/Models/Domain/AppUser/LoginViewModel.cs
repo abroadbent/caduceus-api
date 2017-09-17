@@ -4,28 +4,22 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Api.Models.Domain.AppUser
 {
-    public class LoginViewModel : IValidatableObject
+    public class LoginViewModel
     {
+        [Required, EmailAddress]
         public string Username { get; set; }
-        public string Password { get; set; }
+
+		[MinLength(6), MaxLength(25), Required]
+		public string Password { get; set; }
 
         public LoginViewModel()
         {
         }
 
-        // todo: should we use this style of validation throughout the models or use
-        // annotation and logic services to do the validation?
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        public LoginViewModel(string username, string password)
         {
-            if(string.IsNullOrWhiteSpace(this.Username))
-            {
-                yield return new ValidationResult("Username is required.");
-            }
-
-            if(string.IsNullOrWhiteSpace(this.Password))
-            {
-                yield return new ValidationResult("Password is required.");
-            }
+            this.Username = username;
+            this.Password = password;
         }
     }
 }
