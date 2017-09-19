@@ -1,14 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Api.Models.Domain.Tenant;
 
 namespace Api.Models.Domain.Inventory
 {
     public class InventoryLocation : TenantModel<int>
     {
+        [MaxLength(255)]
         public string Description { get; set; }
+
+        [MinLength(1), MaxLength(25), Required]
         public string Name { get; set; }
-        public int ParentId { get; set; }
+
+        public int? ParentId { get; set; }
+
+        [Required]
+        public int StatusId { get; set; }
 
         public virtual InventoryLocation Parent { get; set; }
         public virtual ICollection<InventoryLocation> SubLocations { get; set; }

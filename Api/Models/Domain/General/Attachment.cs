@@ -1,14 +1,26 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace Api.Models.Domain.General
 {
     public class Attachment
     {
+        [Required]
         public string Filename { get; set; }
-        public decimal FileSize { get; set; }
+
+        [Required]
+        public double FileSize { get; set; }
+
+        [Url]
         public string ThumbnailUrl { get; set; }
+
+        [Required, Url]
         public string Url { get; set; }
-        public FileTypes Type { get; set; }
+
         public string Hash { get; set; }
+
+        [Required]
+        public FileTypes Type { get; set; }
 
         public enum FileTypes 
         {

@@ -1,16 +1,21 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Api.Models.Domain.Tenant;
 
 namespace Api.Models.Domain.Manufacturing
 {
     public class LoggedWork : TenantModel<int>
     {
-        public AppUser.AppUser User { get; set; }
-        public string Description { get; set; }
-        public DateTimeOffset? ClockIn { get; set; }
-        public DateTimeOffset? ClockOut { get; set; }
+		public DateTimeOffset? ClockIn { get; set; }
+		public DateTimeOffset? ClockOut { get; set; }
 
-        public WorkOrder WorkOrder { get; set; }
+        [MaxLength(255)]
+        public string Description { get; set; }
+
+        public int? WorkOrderId { get; set; }
+
+        public virtual AppUser.AppUser User { get; set; }
+        public virtual WorkOrder WorkOrder { get; set; }
 
         public TimeSpan? TimeClocked
         {

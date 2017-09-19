@@ -46,7 +46,7 @@ namespace Api.Controllers
 		}
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(string id, [FromBody]EditableInventoryItemViewModel model)
+        public async Task<IActionResult> Put(string id, [FromBody]InventoryItem model)
         {
 			if (!ModelState.IsValid)
 			{
@@ -59,7 +59,7 @@ namespace Api.Controllers
         }
 
 		[HttpPost]
-		public async Task<IActionResult> Post([FromBody]CreateInventoryItemViewModel model)
+		public async Task<IActionResult> Post([FromBody]InventoryItem model)
 		{
 			if (!ModelState.IsValid)
 			{

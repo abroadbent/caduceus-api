@@ -1,15 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Api.Models.Domain.Tenant;
 
 namespace Api.Models.Domain.Compliance
 {
     public class AuditEntry : TenantModel<int>
     {
-        public string Message { get; set; }
-        public string Username { get; set; }
+        [MaxLength(25), MinLength(1)]
         public string FirstName { get; set; }
-        public string LastName { get; set; }
+
+		[MaxLength(25), MinLength(1)]
+		public string LastName { get; set; }
+
+        [MaxLength(1000), MinLength(1), Required]
+        public string Message { get; set; }
+
+        [EmailAddress, Required]
+        public string Username { get; set; }
 
         public virtual ICollection<AuditEntryChange> Changes { get; set; }
 

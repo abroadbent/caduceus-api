@@ -4,7 +4,7 @@ using Api.Models.Domain.Inventory;
 
 namespace Api.Services
 {
-    public interface IInventoryItemService : ICrudService<InventoryItem, CreateInventoryItemViewModel, EditableInventoryItemViewModel, InventoryItemFilter>
+    public interface IInventoryItemService : ICrudService<InventoryItem, InventoryItem, InventoryItem, InventoryItemFilter>
     {
         Task<InventoryItemStatus> AdvanceWorkflow(int id);
     }

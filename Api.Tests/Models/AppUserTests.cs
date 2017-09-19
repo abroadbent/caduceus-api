@@ -9,7 +9,7 @@ namespace Api.Tests
 {
     public class AppUserTests
     {
-		private AppUser _testUser;
+		private readonly AppUser _testUser;
 
 		public AppUserTests()
 		{

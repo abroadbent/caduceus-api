@@ -1,13 +1,16 @@
 ﻿using System;
+using Api.Models.Domain.General;
 using Api.Models.Domain.Tenant;
 
 namespace Api.Models.Domain.Manufacturing
 {
-    public class WorkOrderStatus : TenantModel<int>
+    public class WorkOrderStatus : Status
     {
-        public string Code { get; set; }
-        public string Description { get; set; }
-        public string Name { get; set; }
+        // todo: add enum list
+        public enum Statuses 
+        {
+            Unknown = 1
+        }
 
         public WorkOrderStatus()
         {

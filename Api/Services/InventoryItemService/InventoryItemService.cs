@@ -38,7 +38,7 @@ namespace Api.Services
             return await Task.FromResult(query.ToList());
 		}
 
-        public async Task<InventoryItem> Create(CreateInventoryItemViewModel model)
+        public async Task<InventoryItem> Create(InventoryItem model)
 		{
             var item = _mapper.Map<InventoryItem>(model);
 
@@ -61,7 +61,7 @@ namespace Api.Services
 			return await _db.InventoryItems.SingleOrDefaultAsync(a => a.Id == id);
 		}
 
-        public async Task<InventoryItem> Update(EditableInventoryItemViewModel model)
+        public async Task<InventoryItem> Update(InventoryItem model)
 		{
 			var item = await Single(model.Id);
             item = _mapper.Map<InventoryItem>(model);

@@ -1,11 +1,15 @@
 ﻿using System;
+using Api.Models.Domain.General;
+
 namespace Api.Models.Domain.Inventory
 {
-    public class InventoryItemStatus
+    public class InventoryItemStatus : Status
     {
-        public string Code { get; set; }
-        public string Description { get; set; }
-        public string Name { get; set; }
+        // todo: add real statuses here
+        public enum Statuses
+        {
+            Unknown = 1    
+        }
 
         public InventoryItemStatus()
         {

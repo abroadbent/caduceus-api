@@ -7,7 +7,8 @@ namespace Api.Models.Domain.Manufacturing
     {
         //todo: add real statuses
         public enum Statuses
-        {
+        { 
+            Unknown = 1
         }
 
         public WorkOrderStepStatus()

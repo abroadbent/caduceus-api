@@ -1,14 +1,22 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Api.Models.Domain.Tenant;
 
 namespace Api.Models.Domain.Manufacturing
 {
     public class QualityTestResult : TenantModel<int>
     {
-        public QualityTest Test { get; set; }
         public bool IsPassed { get; set; }
-        public object Result { get; set; }
+
+        [MaxLength(1000)]
         public string Notes { get; set; }
+
+        [Range(1, int.MaxValue), Required]
+        public int QualityTestId { get; set; }
+
+        public object Result { get; set; }
+
+        public virtual QualityTest QualityTest { get; set; }
 
 		public QualityTestResult()
         {
