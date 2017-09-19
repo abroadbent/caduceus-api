@@ -9,6 +9,7 @@ using Api.Utilities;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Api.Services.AppUserService
 {
@@ -17,12 +18,14 @@ namespace Api.Services.AppUserService
 		private readonly IMapper _mapper;
 		private readonly ApplicationDbContext _db;
         private readonly IJwtService _jwtService;
+        private readonly ILogger _logger;
 
-        public AppUserService(IMapper mapper, ApplicationDbContext db, IJwtService jwtService)
+        public AppUserService(IMapper mapper, ApplicationDbContext db, IJwtService jwtService, ILogger logger)
 		{
 			this._mapper = mapper;
 			this._db = db;
             this._jwtService = jwtService;
+            this._logger = logger;
 		}
 
         public async Task<List<AppUser>> Collection(AppUserFilter filter)
@@ -67,6 +70,12 @@ namespace Api.Services.AppUserService
         public async Task<bool> Disable(int id)
         {
             var user = await Single(id);
+			if (user == null)
+			{
+				_logger.LogWarning("No matching user to disable with the following id: " + id.ToString());
+                return false;
+			}
+
             user.IsActive = false;
 
             return await _db.SaveChangesAsync() == 1;
@@ -74,13 +83,20 @@ namespace Api.Services.AppUserService
 
         public async Task<AuthResponse> Login(LoginViewModel model)
         {
-            // todo: need to check for bad username too
             // get user based on username
             var user = await _db.AppUsers.Where(a => a.UserName == model.Username).SingleOrDefaultAsync();
+
+            // check if username is not found
+            if(user == null)
+            {
+                _logger.LogInformation("Username not found for " + model.Username);
+                return new AuthResponse() { Error = "Username was not found." };
+            }
 
             // validate password
             if(!Encryption.ValidateHashedPassword(model.Password, user.PasswordHash))
             {
+                _logger.LogInformation("Invalid login for " + model.Username);
                 throw new UnauthorizedAccessException();
             }
 
@@ -99,6 +115,12 @@ namespace Api.Services.AppUserService
         public async Task<AppUser> Update(EditableAppUserViewModel model)
         {
             var user = await Single(model.Id);
+            if(user == null)
+            {
+                _logger.LogWarning("No matching user to update with the following id: " + model.Id.ToString());
+                return null;
+            }
+
             user = _mapper.Map<AppUser>(model);
 
             await _db.SaveChangesAsync();

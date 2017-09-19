@@ -3,11 +3,13 @@ namespace Api.Models.Domain.AppUser
 {
     public struct AuthResponse
     {
+        public string Error { get; set; }
         public string Token { get; set; }
 
-        public AuthResponse(string token)
+        public AuthResponse(string token, string error = "")
         {
-            this.Token = token;    
+            this.Error = error;
+            this.Token = token;
         }
     }
 }

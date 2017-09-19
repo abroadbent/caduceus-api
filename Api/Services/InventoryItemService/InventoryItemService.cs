@@ -10,6 +10,7 @@ using Api.Utilities;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Api.Services
 {
@@ -18,12 +19,14 @@ namespace Api.Services
 		private readonly IMapper _mapper;
 		private readonly ApplicationDbContext _db;
 		private readonly IJwtService _jwtService;
+        private readonly ILogger _logger;
 
-		public InventoryItemService(IMapper mapper, ApplicationDbContext db, IJwtService jwtService)
+		public InventoryItemService(IMapper mapper, ApplicationDbContext db, IJwtService jwtService, ILogger logger)
 		{
 			this._mapper = mapper;
 			this._db = db;
 			this._jwtService = jwtService;
+            this._logger = logger;
 		}
 
         public async Task<InventoryItemStatus> AdvanceWorkflow(int id)
@@ -51,6 +54,12 @@ namespace Api.Services
 		public async Task<bool> Disable(int id)
 		{
 			var item = await Single(id);
+			if (item == null)
+			{
+				_logger.LogWarning("No matching inventory item to disable with the following id: " + id.ToString());
+                return false;
+			}
+
 			item.IsActive = false;
 
 			return await _db.SaveChangesAsync() == 1;
@@ -64,6 +73,12 @@ namespace Api.Services
         public async Task<InventoryItem> Update(InventoryItem model)
 		{
 			var item = await Single(model.Id);
+			if (item == null)
+			{
+				_logger.LogWarning("No matching inventory item to update with the following id: " + model.Id.ToString());
+				return null;
+			}
+
             item = _mapper.Map<InventoryItem>(model);
 
             await _db.SaveChangesAsync();

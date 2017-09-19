@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using AutoMapper;
-using Api.Models.System;
 using Api.Models.Domain.AppUser;
-using System.Text;
 using Api.Services;
 
 namespace Api.Controllers
