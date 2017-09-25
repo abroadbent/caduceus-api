@@ -10,6 +10,10 @@ namespace Api.Models.Domain.General
 
         public Filter()
         {
+            // by default let's return only active records, however, if intentionally
+            // set to null then we can return all records.  If intentionally set to
+            // false, we will return only inactive records.
+            this.IsActive = true;
         }
     }
 }

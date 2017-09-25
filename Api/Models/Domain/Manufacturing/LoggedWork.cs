@@ -12,6 +12,9 @@ namespace Api.Models.Domain.Manufacturing
         [MaxLength(255)]
         public string Description { get; set; }
 
+        [Range(1, int.MaxValue), Required]
+        public int UserId { get; set; }
+
         public int? WorkOrderId { get; set; }
 
         public virtual AppUser.AppUser User { get; set; }

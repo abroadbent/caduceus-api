@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Models.Domain.AppUser;
-using Api.Models.Domain.General;
 using Api.Models.System;
 using Api.Utilities;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -33,22 +31,22 @@ namespace Api.Services.AppUserService
             var query = _db.AppUsers.AsQueryable();
 
             if (filter.Created.HasValue) {
-                query.Where(a => a.Created >= filter.Created.Start && a.Created <= filter.Created.End);
+                query = query.Where(a => a.Created >= filter.Created.Start && a.Created <= filter.Created.End);
             }
 
 			if (filter.IsActive.HasValue)
 			{
-				query.Where(a => a.IsActive == filter.IsActive);
+				query = query.Where(a => a.IsActive == filter.IsActive);
 			}
 
 			if (filter.Modified.HasValue)
 			{
-                query.Where(a => a.Modified >= filter.Modified.Start && a.Modified <= filter.Modified.End);
+                query = query.Where(a => a.Modified >= filter.Modified.Start && a.Modified <= filter.Modified.End);
 			}
 
             if (!string.IsNullOrWhiteSpace(filter.SearchCriteria))
             {
-                query.Where(a => a.SearchContent.Contains(filter.SearchCriteria));
+                query = query.Where(a => a.SearchContent.Contains(filter.SearchCriteria));
             }
 
             return await Task.FromResult(query.ToList());
@@ -78,7 +76,7 @@ namespace Api.Services.AppUserService
 
             user.IsActive = false;
 
-            return await _db.SaveChangesAsync() == 1;
+            return await Task.FromResult(_db.SaveChanges() == 1);
         }
 
         public async Task<AuthResponse> Login(LoginViewModel model)
@@ -109,7 +107,7 @@ namespace Api.Services.AppUserService
 
         public async Task<AppUser> Single(int id)
         {
-            return await _db.AppUsers.SingleOrDefaultAsync(a => a.Id == id);
+            return await Task.FromResult(_db.AppUsers.SingleOrDefault(a => a.Id == id));
         }
 
         public async Task<AppUser> Update(EditableAppUserViewModel model)

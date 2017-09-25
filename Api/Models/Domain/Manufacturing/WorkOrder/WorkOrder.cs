@@ -3,10 +3,11 @@ using Api.Models.Domain.Inventory;
 using Api.Models.Domain.General;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Api.Models.Domain.Tenant;
 
 namespace Api.Models.Domain.Manufacturing
 {
-    public class WorkOrder
+    public class WorkOrder : TenantModel<int>
     {
         [Required]
         public int BillOfMaterialId { get; set; }

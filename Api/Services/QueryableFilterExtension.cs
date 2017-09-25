@@ -10,22 +10,22 @@ namespace Api.Services
         {
 			if (filter.Created.HasValue)
 			{
-				query.Where(a => a.Created >= filter.Created.Start && a.Created <= filter.Created.End);
+				query = query.Where(a => a.Created >= filter.Created.Start && a.Created <= filter.Created.End);
 			}
 
 			if (filter.IsActive.HasValue)
 			{
-				query.Where(a => a.IsActive == filter.IsActive);
+				query = query.Where(a => a.IsActive == filter.IsActive);
 			}
 
 			if (filter.Modified.HasValue)
 			{
-				query.Where(a => a.Modified >= filter.Modified.Start && a.Modified <= filter.Modified.End);
+				query = query.Where(a => a.Modified >= filter.Modified.Start && a.Modified <= filter.Modified.End);
 			}
 
 			if (!string.IsNullOrWhiteSpace(filter.SearchCriteria))
 			{
-				query.Where(a => a.SearchContent.Contains(filter.SearchCriteria));
+				query = query.Where(a => a.SearchContent.Contains(filter.SearchCriteria));
 			}
 
             return query;
