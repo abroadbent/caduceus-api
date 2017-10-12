@@ -4,10 +4,12 @@ using Api.Models.Domain.Tenant;
 using Api.Models.Domain.AppUser;
 using Api.Models.Domain.Inventory;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Api.Models.Domain.General;
 
 namespace Api.Models.Domain.Manufacturing
 {
-    public class WorkOrderStep : TenantModel<int>
+    public class WorkOrderStep : DomainModel<int>
     {
         public decimal ActualCost { get; set; }
 		public double ActualLaborHours { get; set; }
@@ -34,7 +36,6 @@ namespace Api.Models.Domain.Manufacturing
         [Range(1, int.MaxValue), Required]
         public int WorkOrderId { get; set; }
 
-        public virtual ICollection<AppUser.AppUser> AssignedUsers { get; set; }
         public virtual ICollection<LoggedWork> LoggedWork { get; set; }
         public virtual ICollection<QualityTestResult> QualityTestResults { get; set; }
         public virtual RoutingStep RoutingStep { get; set; }

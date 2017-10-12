@@ -6,8 +6,8 @@ using Api.Models.Domain.AppUser;
 
 namespace Api.Services
 {
-    public interface IAppUserService : ICrudService<AppUser, RegistrationViewModel, EditableAppUserViewModel, AppUserFilter>
+    public interface IAppUserService : ICrudService<AppUser, AppUserRegistration, AppUserUpdate, AppUserFilter>
     {
-        Task<AuthResponse> Login(LoginViewModel model);
+        Task<AuthResponse> Login(AppUserLogin model);
     }
 }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Api.Models.Domain.AppUser
 {
-    public class LoginViewModel
+    public class AppUserLogin
     {
         [Required, EmailAddress]
         public string Username { get; set; }
@@ -12,11 +12,11 @@ namespace Api.Models.Domain.AppUser
 		[MinLength(6), MaxLength(25), Required]
 		public string Password { get; set; }
 
-        public LoginViewModel()
+        public AppUserLogin()
         {
         }
 
-        public LoginViewModel(string username, string password)
+        public AppUserLogin(string username, string password)
         {
             this.Username = username;
             this.Password = password;

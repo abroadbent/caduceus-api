@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Api.Models.Domain.Inventory;
 using Api.Models.Domain.Tenant;
 
@@ -19,8 +20,11 @@ namespace Api.Models.Domain.Manufacturing
         [Range(1, double.MaxValue), Required]
         public double Quantity { get; set; }
 
-		public virtual InventoryItem Component { get; set; }
-		public virtual InventoryItem Parent { get; set; }
+  //      [ForeignKey("InventoryItem")]
+		//public virtual InventoryItem Component { get; set; }
+
+  //      [ForeignKey("InventoryItem")]
+		//public virtual InventoryItem Parent { get; set; }
 
         public BillOfMaterial()
         {

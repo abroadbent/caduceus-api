@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Api.Models.Domain.AppUser
 {
-    public class RegistrationViewModel
+    public class AppUserRegistration
     {
 		[MaxLength(25), MinLength(1), Required]
 		public string FirstName { get; set; }
@@ -21,6 +21,9 @@ namespace Api.Models.Domain.AppUser
         [Phone]
         public string PhoneNumber { get; set; }
 
+        [Required]
+        public int TenantId { get; set; }
+
         [EmailAddress]
         public string Username { get; set; }
 
@@ -32,12 +35,13 @@ namespace Api.Models.Domain.AppUser
             }
         }
 
-        public RegistrationViewModel()
+        public AppUserRegistration()
         {
         }
 
-        public RegistrationViewModel(string firstName, string lastName, string username, string password)
+        public AppUserRegistration(int tenantId, string firstName, string lastName, string username, string password)
         {
+            this.TenantId = tenantId;
             this.FirstName = firstName;
             this.LastName = lastName;
             this.Username = username;

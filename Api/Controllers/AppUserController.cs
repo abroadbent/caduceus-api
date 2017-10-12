@@ -2,10 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Api.Models.Domain.AppUser;
 using Api.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize(Policy = "User"), Route("api/[controller]")]
     public class AppUserController : Controller
     {
         private readonly IAppUserService _service;
@@ -23,7 +24,7 @@ namespace Api.Controllers
             return new NoContentResult();
         }
 
-        [HttpGet]
+        [Authorize(Policy = "Admin"), HttpGet]
         public async Task<ActionResult> Get(AppUserFilter filter)
         {
             var users = await _service.Collection(filter);
@@ -39,8 +40,8 @@ namespace Api.Controllers
 			return new OkObjectResult(user);
 		}
 
-        [HttpPost, Route("Login")]
-        public async Task<IActionResult> Login([FromBody]LoginViewModel model)
+        [AllowAnonymous, HttpPost, Route("Login")]
+        public async Task<IActionResult> Login([FromBody]AppUserLogin model)
         {
             if(!ModelState.IsValid)
             {
@@ -53,7 +54,7 @@ namespace Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(string id, [FromBody]EditableAppUserViewModel model)
+        public async Task<IActionResult> Put(string id, [FromBody]AppUserUpdate model)
         {
 			if (!ModelState.IsValid)
 			{
@@ -65,8 +66,8 @@ namespace Api.Controllers
 			return new OkObjectResult(user);
         }
 
-		[HttpPost]
-		public async Task<IActionResult> Post([FromBody]RegistrationViewModel model)
+		[AllowAnonymous, HttpPost]
+		public async Task<IActionResult> Post([FromBody]AppUserRegistration model)
 		{
 			if (!ModelState.IsValid)
 			{

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Api.Models.Domain.AppUser
 {
-    public class EditableAppUserViewModel
+    public class AppUserUpdate
     {
 		[MaxLength(25), MinLength(1), Required]
 		public string FirstName { get; set; }
@@ -16,9 +16,5 @@ namespace Api.Models.Domain.AppUser
 
 		[Phone]
 		public string PhoneNumber { get; set; }
-
-        public EditableAppUserViewModel()
-        {
-        }
     }
 }

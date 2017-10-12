@@ -8,8 +8,6 @@ namespace Api.Models.Domain.Tenant
         public string CustomJsonData { get; set; }
         public T TenantId { get; set; }
 
-        public virtual Tenant Tenant { get; set; }
-
         public TenantModel()
         {
         }

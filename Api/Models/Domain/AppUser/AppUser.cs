@@ -24,6 +24,9 @@ namespace Api.Models.Domain.AppUser
 
         public DateTimeOffset? Modified { get; set; }
 
+        [Required, MaxLength(10)]
+        public string Role { get; set; }
+
         [Required, Range(1, int.MaxValue)]
         public int TenantId { get; set; }
 
@@ -41,6 +44,7 @@ namespace Api.Models.Domain.AppUser
         {
             this.Created = DateTimeOffset.Now;
             this.IsActive = true;
+            this.Role = "user";
         }
 
         public AppUser(int tenantId, string username) : base(username)
@@ -48,12 +52,14 @@ namespace Api.Models.Domain.AppUser
             this.Created = DateTimeOffset.Now;
             this.IsActive = true;
             this.TenantId = tenantId;
+            this.Role = "user";
         }
 
-        public AppUser(int tenantId, string username, string firstName, string lastName) : this(tenantId, username) 
+        public AppUser(int tenantId, string username, string firstName, string lastName, string role) : this(tenantId, username) 
         {
             this.FirstName = firstName;
             this.LastName = lastName;
+            this.Role = role;
         }
     }
 }

@@ -2,10 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Api.Models.Domain.Inventory;
 using Api.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize(Policy = "User"), Route("api/[controller]")]
     public class InventoryItemController : Controller
     {
         private readonly IInventoryItemService _service;

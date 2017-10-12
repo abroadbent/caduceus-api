@@ -1,10 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Api.Models.Domain.General;
 using Api.Models.Domain.Tenant;
 
 namespace Api.Models.Domain.Manufacturing
 {
-    public class QualityTestResult : TenantModel<int>
+    public class QualityTestResult : DomainModel<int>
     {
         public bool IsPassed { get; set; }
 
@@ -14,7 +15,7 @@ namespace Api.Models.Domain.Manufacturing
         [Range(1, int.MaxValue), Required]
         public int QualityTestId { get; set; }
 
-        public object Result { get; set; }
+        public string Result { get; set; }
 
         public virtual QualityTest QualityTest { get; set; }
 

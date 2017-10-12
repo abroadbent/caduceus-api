@@ -1,9 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Api.Models.Domain.Tenant;
 
 namespace Api.Models.Domain.General
 {
-    public class Attachment
+    public class Attachment : TenantModel<int>
     {
         [Required]
         public string Filename { get; set; }

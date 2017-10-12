@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Api.Models.Domain.General;
 using Api.Models.Domain.Tenant;
 
@@ -14,7 +15,7 @@ namespace Api.Models.Domain.Manufacturing
         [MaxLength(255)]
         public string Description { get; set; }
 
-        public object ExpectedResult { get; set; }
+        public string ExpectedResult { get; set; }
 
         [MaxLength(1000)]
         public string Instructions { get; set; }

@@ -16,20 +16,15 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens;
 using System.Text;
 using Api.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Api
 {
     public class Startup
     {
-        private readonly IConfigurationSection _jwtOptions;
-        private readonly SymmetricSecurityKey _signedKey;
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
-            _jwtOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
-            _signedKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions[nameof(JwtIssuerOptions.SigningKey)]));
         }
 
         public IConfiguration Configuration { get; }
@@ -45,23 +40,33 @@ namespace Api
                                .AllowCredentials()
                                .AllowAnyHeader());
             });
+            services.AddLogging(options =>
+            {
+                options.AddConsole();
+                options.AddDebug();
+            });
             services.AddMvc();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString(("DefaultConnection"))));
             services.AddAutoMapper();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Audience = Configuration.GetValue<string>("Auth:JwtAudience");
+                    options.Authority = Configuration.GetValue<string>("Auth:JwtAuthority");
+                    options.RequireHttpsMetadata = false;
+                });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("User", policy => policy.RequireClaim("UserId"));
+                options.AddPolicy("Admin", policy => policy.RequireClaim("IsAdmin"));
+                options.AddPolicy("SysAdmin", policy => policy.RequireClaim("IsSysAdmin"));
+            });
 
             // add app services
             services.AddTransient<IAppUserService, AppUserService>();
+            services.AddTransient<IInventoryItemService, InventoryItemService>();
             services.AddTransient<IJwtService, JwtService>();
-
-            // jwt token authorization configuration
-            var jwtOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
-            services.Configure<JwtIssuerOptions>(options =>
-            {
-                options.Issuer = jwtOptions[nameof(JwtIssuerOptions.Issuer)];
-                options.Audience = jwtOptions[nameof(JwtIssuerOptions.Audience)];
-                options.SigningCredentials = new SigningCredentials(_signedKey, SecurityAlgorithms.HmacSha256);
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,21 +79,7 @@ namespace Api
 
             app.UseCors("CorsPolicy");
             app.UseMvc();
-
-			// jwt token authorization configuration
-			var jwtOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
-			var tokenValidationParameters = new TokenValidationParameters
-			{
-				ValidateIssuer = true,
-				ValidIssuer = jwtOptions[nameof(JwtIssuerOptions.Issuer)],
-				ValidateAudience = true,
-				ValidAudience = jwtOptions[nameof(JwtIssuerOptions.Audience)],
-				ValidateIssuerSigningKey = true,
-                IssuerSigningKey = _signedKey,
-				RequireExpirationTime = false,
-				ValidateLifetime = false,
-				ClockSkew = TimeSpan.Zero
-			};
+            app.UseAuthentication();
         }
     }
 }

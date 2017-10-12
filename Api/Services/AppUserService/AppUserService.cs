@@ -18,7 +18,7 @@ namespace Api.Services.AppUserService
         private readonly IJwtService _jwtService;
         private readonly ILogger _logger;
 
-        public AppUserService(IMapper mapper, ApplicationDbContext db, IJwtService jwtService, ILogger logger)
+        public AppUserService(IMapper mapper, ApplicationDbContext db, IJwtService jwtService, ILogger<AppUserService> logger)
 		{
 			this._mapper = mapper;
 			this._db = db;
@@ -52,7 +52,7 @@ namespace Api.Services.AppUserService
             return await Task.FromResult(query.ToList());
         }
 
-        public async Task<AppUser> Create(RegistrationViewModel model)
+        public async Task<AppUser> Create(AppUserRegistration model)
         {
             var user = _mapper.Map<AppUser>(model);
 
@@ -79,7 +79,7 @@ namespace Api.Services.AppUserService
             return await Task.FromResult(_db.SaveChanges() == 1);
         }
 
-        public async Task<AuthResponse> Login(LoginViewModel model)
+        public async Task<AuthResponse> Login(AppUserLogin model)
         {
             // get user based on username
             var user = await _db.AppUsers.Where(a => a.UserName == model.Username).SingleOrDefaultAsync();
@@ -99,7 +99,7 @@ namespace Api.Services.AppUserService
             }
 
             // get JWT token string
-            var token = await _jwtService.GenerateEncodedToken(model.Username);
+            var token = await _jwtService.GenerateEncodedToken(model.Username, user.Role);
 
             // return auth response
             return new AuthResponse(token);
@@ -110,7 +110,7 @@ namespace Api.Services.AppUserService
             return await Task.FromResult(_db.AppUsers.SingleOrDefault(a => a.Id == id));
         }
 
-        public async Task<AppUser> Update(EditableAppUserViewModel model)
+        public async Task<AppUser> Update(AppUserUpdate model)
         {
             var user = await Single(model.Id);
             if(user == null)

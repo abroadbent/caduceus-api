@@ -21,7 +21,7 @@ namespace Api.Services
 		private readonly IJwtService _jwtService;
         private readonly ILogger _logger;
 
-		public InventoryItemService(IMapper mapper, ApplicationDbContext db, IJwtService jwtService, ILogger logger)
+		public InventoryItemService(IMapper mapper, ApplicationDbContext db, IJwtService jwtService, ILogger<InventoryItemService> logger)
 		{
 			this._mapper = mapper;
 			this._db = db;

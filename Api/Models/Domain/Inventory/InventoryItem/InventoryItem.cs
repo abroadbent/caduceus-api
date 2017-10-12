@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Api.Models.Domain.General;
 using Api.Models.Domain.Manufacturing;
 using Api.Models.Domain.Tenant;

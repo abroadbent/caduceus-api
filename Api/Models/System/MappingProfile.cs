@@ -8,7 +8,8 @@ namespace Api.Models.System
     {
         public MappingProfile()
         {
-            CreateMap<RegistrationViewModel, AppUser>();
+            CreateMap<AppUserRegistration, AppUser>();
+            CreateMap<AppUserUpdate, AppUser>();
         }
     }
 }

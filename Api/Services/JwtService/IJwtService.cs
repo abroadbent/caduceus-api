@@ -5,6 +5,6 @@ namespace Api.Services
 {
     public interface IJwtService
     {
-        Task<string> GenerateEncodedToken(string userName);
+        Task<string> GenerateEncodedToken(string userName, string role);
     }
 }

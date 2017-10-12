@@ -103,7 +103,7 @@ namespace Api.Tests
         [Fact]
         public async Task CreateValidAppUser()
         {
-            var registrationVm = new RegistrationViewModel("Nicholas", "Barger", "nicholas@nicholasbarger.com", "Passw0rd!");
+            var registrationVm = new AppUserRegistration("Nicholas", "Barger", "nicholas@nicholasbarger.com", "Passw0rd!");
             registrationVm.PhoneNumber = "239-216-3766";
 
             var mockedDb = new Mock<ApplicationDbContext>();
