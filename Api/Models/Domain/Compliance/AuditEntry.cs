@@ -19,6 +19,14 @@ namespace Api.Models.Domain.Compliance
         [EmailAddress, Required]
         public string Username { get; set; }
 
+        public override string SearchContent {
+            get
+            {
+                return string.Join("|", new[] { this.FirstName, this.LastName, this.Username, this.Message });
+            }
+            set { value = ""; }
+        }
+
         public virtual ICollection<AuditEntryChange> Changes { get; set; }
 
         public AuditEntry()

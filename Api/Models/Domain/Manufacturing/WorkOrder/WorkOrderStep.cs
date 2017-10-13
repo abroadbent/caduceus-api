@@ -30,12 +30,22 @@ namespace Api.Models.Domain.Manufacturing
         public double ScrapQuantity { get; set; }
         public int? ScrapReasonId { get; set; }
 
+        public override string SearchContent
+        {
+            get
+            {
+                return string.Join("|", new[] { this.Name, this.Description });
+            }
+            set { value = ""; }
+        }
+
         [Range(1, int.MaxValue), Required]
         public int StatusId { get; set; }
 
         [Range(1, int.MaxValue), Required]
         public int WorkOrderId { get; set; }
 
+        public virtual ICollection<Attachment> Attachments { get; set; }
         public virtual ICollection<LoggedWork> LoggedWork { get; set; }
         public virtual ICollection<QualityTestResult> QualityTestResults { get; set; }
         public virtual RoutingStep RoutingStep { get; set; }

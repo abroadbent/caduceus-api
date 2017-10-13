@@ -12,6 +12,15 @@ namespace Api.Models.Domain.General
         [MinLength(1), MaxLength(100), Required]
         public string Name { get; set; }
 
+        public override string SearchContent
+        {
+            get
+            {
+                return string.Join("|", new[] { this.Name, this.Description });
+            }
+            set { value = ""; }
+        }
+
         public Skill()
         {
         }

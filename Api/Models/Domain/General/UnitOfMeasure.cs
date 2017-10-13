@@ -14,6 +14,15 @@ namespace Api.Models.Domain.General
         [MaxLength(25), Required]
         public string Name { get; set; }
 
+        public override string SearchContent
+        {
+            get
+            {
+                return string.Join("|", new[] { this.Code, this.Name, this.Description });
+            }
+            set { value = ""; }
+        }
+
         public UnitOfMeasure()
         {
         }

@@ -18,6 +18,15 @@ namespace Api.Models.Domain.Inventory
         [Required]
         public int StatusId { get; set; }
 
+        public override string SearchContent
+        {
+            get
+            {
+                return string.Join("|", new[] { this.Name, this.Description });
+            }
+            set { value = ""; }
+        }
+
         public virtual InventoryLocation Parent { get; set; }
         public virtual ICollection<InventoryLocation> SubLocations { get; set; }
         public virtual InventoryLocationStatus Status { get; set; }

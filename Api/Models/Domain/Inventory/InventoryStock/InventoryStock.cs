@@ -18,6 +18,15 @@ namespace Api.Models.Domain.Inventory
         [MaxLength(10)]
         public string Revision { get; set; }
 
+        public override string SearchContent
+        {
+            get
+            {
+                return string.Join("|", new[] { this.InventoryItem.Name, this.InventoryItem.Code, this.InventoryItem.Description });
+            }
+            set { value = ""; }
+        }
+
         [Required]
         public int StatusId { get; set; }
 

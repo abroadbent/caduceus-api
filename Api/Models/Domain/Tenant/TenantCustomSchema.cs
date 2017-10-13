@@ -15,6 +15,15 @@ namespace Api.Models.Domain.Tenant
         [Required]
         public string Schema { get; set; }
 
+        public override string SearchContent
+        {
+            get
+            {
+                return string.Join("|", new[] { this.Model });
+            }
+            set { value = ""; }
+        }
+
         [Range(1, int.MaxValue), Required]
         public int Version { get; set; }
 

@@ -20,6 +20,15 @@ namespace Api.Models.Domain.Manufacturing
         [MaxLength(1000)]
         public string Instructions { get; set; }
 
+        public override string SearchContent
+        {
+            get
+            {
+                return string.Join("|", new[] { this.Name, this.Description, this.Instructions });
+            }
+            set { value = ""; }
+        }
+
         public virtual ICollection<Attachment> Attachments { get; set; }
 
         public QualityTest()

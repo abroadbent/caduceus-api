@@ -23,6 +23,15 @@ namespace Api.Models.Domain.General
         [Required]
         public FileTypes Type { get; set; }
 
+        public override string SearchContent
+        {
+            get
+            {
+                return string.Join("|", new[] { this.Filename });
+            }
+            set { value = ""; }
+        }
+
         public enum FileTypes 
         {
             Image = 1,

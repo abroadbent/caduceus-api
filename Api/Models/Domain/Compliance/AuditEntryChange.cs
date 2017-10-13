@@ -18,6 +18,15 @@ namespace Api.Models.Domain.Compliance
         [Required]
         public string NewValue { get; set; }
 
+        public override string SearchContent
+        {
+            get
+            {
+                return string.Join("|", new[] { this.Field, this.Model });
+            }
+            set { value = ""; }
+        }
+
         public AuditEntryChange()
         {
         }

@@ -12,20 +12,19 @@ namespace Api.Models.Domain.General
         [Required]
         public Guid ObfuscatedId { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed), Required]
-		public bool IsActive { get; set; }
+        public bool IsActive { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed), Required]
-		public DateTimeOffset Created { get; set; }
+        public DateTimeOffset Created { get; set; }
 
 		public DateTimeOffset? Modified { get; set; }
 
-        public string SearchContent { get; set; }
+        public abstract string SearchContent { get; set; }
 
         public DomainModel()
         {
             this.IsActive = true;
             this.Created = DateTimeOffset.Now;
+            this.ObfuscatedId = Guid.NewGuid();
         }
     }
 }

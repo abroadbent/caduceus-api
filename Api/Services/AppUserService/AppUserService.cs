@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Models.Domain.AppUser;
+using Api.Models.Domain.Tenant;
 using Api.Models.System;
+using Api.Services.TenantService;
 using Api.Utilities;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -13,17 +15,19 @@ namespace Api.Services.AppUserService
 {
     public class AppUserService : IAppUserService
     {
+        private readonly AppUserContext _db;
 		private readonly IMapper _mapper;
-		private readonly ApplicationDbContext _db;
         private readonly IJwtService _jwtService;
         private readonly ILogger _logger;
+        private readonly ITenantService _tenantService;
 
-        public AppUserService(IMapper mapper, ApplicationDbContext db, IJwtService jwtService, ILogger<AppUserService> logger)
+        public AppUserService(IMapper mapper, AppUserContext db, IJwtService jwtService, ILogger<AppUserService> logger, ITenantService tenantService)
 		{
 			this._mapper = mapper;
 			this._db = db;
             this._jwtService = jwtService;
             this._logger = logger;
+            this._tenantService = tenantService;
 		}
 
         public async Task<List<AppUser>> Collection(AppUserFilter filter)
@@ -55,6 +59,13 @@ namespace Api.Services.AppUserService
         public async Task<AppUser> Create(AppUserRegistration model)
         {
             var user = _mapper.Map<AppUser>(model);
+
+            // create tenant
+            var tenant = new Tenant(model.OrganizationName);
+            tenant = await _tenantService.Create(tenant);
+
+            // assign tenant id to user
+            user.TenantId = tenant.Id;
 
             // hash password
             user.PasswordHash = Encryption.HashPassword(model.Password);

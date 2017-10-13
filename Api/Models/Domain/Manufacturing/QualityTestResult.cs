@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Api.Models.Domain.General;
 using Api.Models.Domain.Tenant;
@@ -17,6 +18,16 @@ namespace Api.Models.Domain.Manufacturing
 
         public string Result { get; set; }
 
+        public override string SearchContent
+        {
+            get
+            {
+                return string.Join("|", new[] { this.Notes, this.Result });
+            }
+            set { value = ""; }
+        }
+
+        public virtual ICollection<Attachment> Attachments { get; set; }
         public virtual QualityTest QualityTest { get; set; }
 
 		public QualityTestResult()

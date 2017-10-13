@@ -13,15 +13,23 @@ namespace Api.Models.Domain.Tenant
         [MaxLength(50), MinLength(1), Required]
         public string Name { get; set; }
 
-        public virtual ICollection<AppUser.AppUser> AppUsers { get; set; }
-        public virtual ICollection<InventoryItem> InventoryItems { get; set; }
-        public virtual ICollection<InventoryLocation> InventoryLocations { get; set; }
-        public virtual ICollection<InventoryStock> InventoryStock { get; set; }
-        public virtual ICollection<Routing> Routings { get; set; }
-        public virtual ICollection<WorkOrder> WorkOrders { get; set; }
-
-        public Tenant()
+        [MaxLength(255), Required]
+        public override string SearchContent
         {
+            get
+            {
+                return string.Join("|", new[] { this.Name });
+            }
+            set { value = ""; }
+        }
+
+        public Tenant() : base()
+        {
+        }
+
+        public Tenant(string name) : this()
+        {
+            this.Name = name;
         }
     }
 }

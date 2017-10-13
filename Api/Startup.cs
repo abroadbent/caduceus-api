@@ -17,6 +17,7 @@ using System.IdentityModel.Tokens;
 using System.Text;
 using Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Api.Services.TenantService;
 
 namespace Api
 {
@@ -46,7 +47,7 @@ namespace Api
                 options.AddDebug();
             });
             services.AddMvc();
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<AppUserContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString(("DefaultConnection"))));
             services.AddAutoMapper();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -67,6 +68,7 @@ namespace Api
             services.AddTransient<IAppUserService, AppUserService>();
             services.AddTransient<IInventoryItemService, InventoryItemService>();
             services.AddTransient<IJwtService, JwtService>();
+            services.AddTransient<ITenantService, TenantService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -13,7 +13,7 @@ namespace Api.Tests
 
 		public AppUserTests()
 		{
-			_testUser = new AppUser(1, "nicholas@nicholasbarger.com", "Nicholas", "Barger");
+			_testUser = new AppUser(1, "nicholas@nicholasbarger.com", "Nicholas", "Barger", "user");
 		}
 
 		[Fact]

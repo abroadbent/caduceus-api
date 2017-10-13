@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using Api.Models.Domain.General;
 using Api.Models.Domain.Tenant;
@@ -15,6 +16,9 @@ namespace Api.Models.Domain.AppUser
 
         [MaxLength(25), MinLength(1), Required]
         public string FirstName { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity), Required]
+        public override int Id { get; set; }
 
         [Required]
         public bool IsActive { get; set; }
@@ -36,11 +40,12 @@ namespace Api.Models.Domain.AppUser
             get {
                 return string.Join("|", new[] { this.FirstName, this.LastName, this.UserName });
             }
+            set { value = ""; }
         }
 
         public virtual Tenant.Tenant Tenant { get; set; }
 
-        public AppUser() 
+        public AppUser() : base()
         {
             this.Created = DateTimeOffset.Now;
             this.IsActive = true;

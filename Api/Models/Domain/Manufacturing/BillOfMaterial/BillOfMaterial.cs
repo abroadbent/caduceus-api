@@ -20,11 +20,20 @@ namespace Api.Models.Domain.Manufacturing
         [Range(1, double.MaxValue), Required]
         public double Quantity { get; set; }
 
-  //      [ForeignKey("InventoryItem")]
-		//public virtual InventoryItem Component { get; set; }
+        [ForeignKey("InventoryItem")]
+		public virtual InventoryItem Component { get; set; }
 
-  //      [ForeignKey("InventoryItem")]
-		//public virtual InventoryItem Parent { get; set; }
+        [ForeignKey("InventoryItem")]
+		public virtual InventoryItem Parent { get; set; }
+
+        public override string SearchContent
+        {
+            get
+            {
+                return string.Join("|", new[] { this.Code, this.Parent.Name, this.Parent.Code });
+            }
+            set { value = ""; }
+        }
 
         public BillOfMaterial()
         {

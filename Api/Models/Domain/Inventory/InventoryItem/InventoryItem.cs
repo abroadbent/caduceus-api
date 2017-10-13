@@ -25,12 +25,22 @@ namespace Api.Models.Domain.Inventory
         [MaxLength(10)]
         public string Revision { get; set; }
 
+        public override string SearchContent
+        {
+            get
+            {
+                return string.Join("|", new[] { this.Code, this.Name, this.Revision, this.Description });
+            }
+            set { value = ""; }
+        }
+
         [Required]
         public int StatusId { get; set; }
 
         public decimal? Weight { get; set; }
         public decimal? Width { get; set; }
 
+        public virtual ICollection<Attachment> Attachments { get; set; }
 		public virtual ICollection<BillOfMaterial> BillOfMaterials { get; set; }
 		public virtual ICollection<Routing> Routings { get; set; }
         public virtual InventoryItemStatus Status { get; set; }

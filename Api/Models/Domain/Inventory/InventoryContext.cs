@@ -6,11 +6,10 @@ using Api.Models.Domain.Manufacturing;
 using Api.Models.Domain.Tenant;
 using Microsoft.EntityFrameworkCore;
 
-namespace Api.Models.System
+namespace Api.Models.Inventory
 {
-    public class ApplicationDbContext : DbContext
+    public class InventoryContext : DbContext
     {
-        public virtual DbSet<AppUser> AppUsers { get; set; }
         public virtual DbSet<Attachment> Attachments { get; set; }
         public virtual DbSet<BillOfMaterial> BillOfMaterials { get; set; }
         public virtual DbSet<InventoryItem> InventoryItems { get; set; }
@@ -25,26 +24,23 @@ namespace Api.Models.System
         public virtual DbSet<RoutingStep> RoutingSteps { get; set; }
         public virtual DbSet<ScrapReason> ScrapReasons { get; set; }
         public virtual DbSet<Skill> Skills { get; set; }
-        public virtual DbSet<Tenant> Tenants { get; set; }
         public virtual DbSet<UnitOfMeasure> UnitOfMeasures { get; set; }
         public virtual DbSet<WorkOrder> WorkOrders { get; set; }
         public virtual DbSet<WorkOrderStatus> WorkOrderStatuses { get; set; }
         public virtual DbSet<WorkOrderStep> WorkOrderSteps { get; set; }
         public virtual DbSet<WorkOrderStepStatus> WorkOrderStepStatuses { get; set; }
 
-        public ApplicationDbContext()
+        public InventoryContext()
         {
         }
 
-        public ApplicationDbContext(DbContextOptions options) : base(options)
+        public InventoryContext(DbContextOptions options) : base(options)
         {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Add keys and model meta information here
-            modelBuilder.Entity<AppUser>().HasKey(a => new { a.TenantId, a.Id });
-
             modelBuilder.Entity<Attachment>().HasKey(a => new { a.TenantId, a.Id });
 
             modelBuilder.Entity<BillOfMaterial>().HasKey(a => new { a.TenantId, a.Id });

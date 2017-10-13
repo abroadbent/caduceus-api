@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Api.Models.Domain.AppUser;
 using Api.Models.Domain.General;
 using Api.Models.Domain.Inventory;
+using Api.Models.Inventory;
 using Api.Models.System;
 using Api.Utilities;
 using AutoMapper;
@@ -17,11 +18,11 @@ namespace Api.Services
     public class InventoryItemService : IInventoryItemService
 	{
 		private readonly IMapper _mapper;
-		private readonly ApplicationDbContext _db;
+		private readonly InventoryContext _db;
 		private readonly IJwtService _jwtService;
         private readonly ILogger _logger;
 
-		public InventoryItemService(IMapper mapper, ApplicationDbContext db, IJwtService jwtService, ILogger<InventoryItemService> logger)
+        public InventoryItemService(IMapper mapper, InventoryContext db, IJwtService jwtService, ILogger<InventoryItemService> logger)
 		{
 			this._mapper = mapper;
 			this._db = db;

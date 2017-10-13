@@ -23,12 +23,22 @@ namespace Api.Models.Domain.Manufacturing
         [Required]
         public int RoutingId { get; set; }
 
+        public override string SearchContent
+        {
+            get
+            {
+                return string.Join("|", new[] { this.InventoryItem.Code, this.InventoryItem.Name });
+            }
+            set { value = ""; }
+        }
+
         [Required]
         public int StatusId { get; set; }
 
         [Required]
         public int UnitOfMeasureId { get; set; }
 
+        public virtual ICollection<Attachment> Attachments { get; set; }
         public virtual BillOfMaterial BillOfMaterial { get; set; }
         public virtual InventoryItem InventoryItem { get; set; }
         public virtual Routing Routing { get; set; }

@@ -15,7 +15,7 @@ namespace Api.Tests
     public class AppUserServiceTests
     {
         private readonly IJwtService _jwtService;
-        private readonly ILogger _logger;
+        private readonly ILogger<AppUserService> _logger;
         private readonly IMapper _mapper;
 
         public AppUserServiceTests()
@@ -25,7 +25,7 @@ namespace Api.Tests
             _jwtService = new JwtService();
 
             var factory = new LoggerFactory();
-            _logger = factory.CreateLogger("AppUserServiceTests.Logger");
+            _logger = factory.CreateLogger<AppUserService>();
         }
 
 		[Fact]
@@ -36,7 +36,7 @@ namespace Api.Tests
                 new AppUser()
             };
 
-			var mockedDb = new Mock<ApplicationDbContext>();
+            var mockedDb = new Mock<AppUserContext>();
             mockedDb.Setup(a => a.AppUsers).ReturnsDbSet(fakeUsers);
 
 			var filter = new AppUserFilter();
@@ -60,7 +60,7 @@ namespace Api.Tests
                 new AppUser() { IsActive = false }
 			};
 
-			var mockedDb = new Mock<ApplicationDbContext>();
+            var mockedDb = new Mock<AppUserContext>();
 			mockedDb.Setup(a => a.AppUsers).ReturnsDbSet(fakeUsers);
 
 			var filter = new AppUserFilter();  // defaults to IsActive = true
@@ -84,7 +84,7 @@ namespace Api.Tests
 				new AppUser() { IsActive = false }
 			};
 
-			var mockedDb = new Mock<ApplicationDbContext>();
+            var mockedDb = new Mock<AppUserContext>();
 			mockedDb.Setup(a => a.AppUsers).ReturnsDbSet(fakeUsers);
 
             var filter = new AppUserFilter();
@@ -103,10 +103,10 @@ namespace Api.Tests
         [Fact]
         public async Task CreateValidAppUser()
         {
-            var registrationVm = new AppUserRegistration("Nicholas", "Barger", "nicholas@nicholasbarger.com", "Passw0rd!");
+            var registrationVm = new AppUserRegistration(1, "Nicholas", "Barger", "nicholas@nicholasbarger.com", "Passw0rd!");
             registrationVm.PhoneNumber = "239-216-3766";
 
-            var mockedDb = new Mock<ApplicationDbContext>();
+            var mockedDb = new Mock<AppUserContext>();
 
             var service = new AppUserService(_mapper, mockedDb.Object, _jwtService, _logger);
 
@@ -125,7 +125,7 @@ namespace Api.Tests
                 new AppUser() { Id = 2 }
 			};
 
-			var mockedDb = new Mock<ApplicationDbContext>();
+            var mockedDb = new Mock<AppUserContext>();
 			mockedDb.Setup(a => a.AppUsers).ReturnsDbSet(fakeUsers);
 
             var service = new AppUserService(_mapper, mockedDb.Object, _jwtService, _logger);

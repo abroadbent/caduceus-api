@@ -42,6 +42,15 @@ namespace Api.Models.Domain.Manufacturing
             }
         }
 
+        public override string SearchContent
+        {
+            get
+            {
+                return string.Join("|", new[] { this.User.FirstName, this.User.LastName, this.User.UserName, this.Description });
+            }
+            set { value = ""; }
+        }
+
         public LoggedWork()
         {
         }
