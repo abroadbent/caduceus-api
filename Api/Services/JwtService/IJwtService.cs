@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Api.Models.Domain.AppUser;
 
 namespace Api.Services
 {
     public interface IJwtService
     {
-        Task<string> GenerateEncodedToken(string userName, string role);
+        string GenerateEncodedToken(AppUser user);
     }
 }

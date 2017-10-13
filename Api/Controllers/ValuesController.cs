@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -39,10 +40,10 @@ namespace Api.Controllers
         }
 
         // GET api/values/secure
-        //[HttpGet, Authorize(Policy = "ApiUser")]
-        //public string Secure()
-        //{
-        //    return "Secured method requiring authorization token.";
-        //}
+        [HttpGet, Authorize(Policy = "User"), Route("Secure")]
+        public string Secure()
+        {
+            return "Secured method requiring authorization token.";
+        }
     }
 }

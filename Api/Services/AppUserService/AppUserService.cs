@@ -110,7 +110,7 @@ namespace Api.Services.AppUserService
             }
 
             // get JWT token string
-            var token = await _jwtService.GenerateEncodedToken(model.Username, user.Role);
+            var token = _jwtService.GenerateEncodedToken(user);
 
             // return auth response
             return new AuthResponse(token);

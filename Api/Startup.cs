@@ -18,6 +18,7 @@ using System.Text;
 using Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Api.Services.TenantService;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Api
 {
@@ -33,6 +34,10 @@ namespace Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // add configuration information
+            var authConfig = Configuration.GetSection("Auth").Get<AuthConfiguration>();
+            services.AddSingleton(authConfig);
+
             // add framework services
             services.AddCors(options => {
                                options.AddPolicy("CorsPolicy", (builder) => builder
@@ -53,15 +58,16 @@ namespace Api
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
-                    options.Audience = Configuration.GetValue<string>("Auth:JwtAudience");
-                    options.Authority = Configuration.GetValue<string>("Auth:JwtAuthority");
+                    options.Audience = authConfig.JwtAudience;
+                    options.Authority = authConfig.JwtAuthority;
                     options.RequireHttpsMetadata = false;
+                    options.Validate();
                 });
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("User", policy => policy.RequireClaim("UserId"));
-                options.AddPolicy("Admin", policy => policy.RequireClaim("IsAdmin"));
-                options.AddPolicy("SysAdmin", policy => policy.RequireClaim("IsSysAdmin"));
+                options.AddPolicy("User", policy => policy.RequireClaim(JwtRegisteredClaimNames.Sub));
+                options.AddPolicy("Admin", policy => policy.RequireClaim("IsAdmin", "true"));
+                options.AddPolicy("SysAdmin", policy => policy.RequireClaim("IsSysAdmin", "true"));
             });
 
             // add app services
