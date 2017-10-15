@@ -86,8 +86,8 @@ namespace Api
             }
 
             app.UseCors("CorsPolicy");
-            app.UseMvc();
             app.UseAuthentication();
+            app.UseMvc();
         }
     }
 }
